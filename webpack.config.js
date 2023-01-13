@@ -2,14 +2,14 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  mode: "development",
+  mode: process.env.NODE_ENV === "production" ? "production" : "development",
   entry: {
-    main: path.resolve(__dirname, "src/app.js"),
+    main: path.resolve(__dirname, "src/index.js"),
   },
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].[contenthash].js",
-    assetModuleFilename: "[name][ext]",
+    assetModuleFilename: "images/[hash][ext]",
     clean: true,
   },
   devtool: "inline-source-map",
@@ -22,7 +22,14 @@ module.exports = {
   module: {
     rules: [
       { test: /\.css$/, use: ["style-loader", "css-loader"] },
-      { test: /\.(svg|ico|png|webp|jpg|gif|jpeg)$/, type: "asset/resource" },
+      {
+        test: /\.(png|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
+      },
+      {
+        test: /\.(svg)$/i,
+        type: "asset/inline",
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -37,7 +44,6 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Just a Demo",
       filename: "index.html",
       template: path.resolve(__dirname, "src/temp.html"),
     }),
