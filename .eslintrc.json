@@ -16,5 +16,9 @@
             "devDependencies": ["**/webpack.*.js"]
           }
         ]
+    },
+    "env": {
+      "browser": true,
+      "node": true
     }
 }
