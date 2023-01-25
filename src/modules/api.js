@@ -1,7 +1,7 @@
-const latLongUrl = `http://api.openweathermap.org/geo/1.0/direct?q=Delhi&limit=1&appid=019a9b26ae74668f975f0960e4fdc9ee`;
+const latLongUrl = `http://api.openweathermap.org/geo/1.0/direct?q=Delhi&limit=1&appid=${process.env.API_KEY}`;
 
 // temp every 3 hours -- total 40 entries
-// const weekWheatherurl = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=019a9b26ae74668f975f0960e4fdc9ee&units=metric`;
+// const weekWheatherurl = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${process.env.API_KEY}&units=metric`;
 
 function getDailyWhether(hourlyData) {
   const hourlyTemp = [];
@@ -34,7 +34,7 @@ async function getLatLong() {
   const lattitude = data[0].lat;
   const longitude = data[0].lon;
   return { lattitude, longitude };
-//   console.log({ lattitude, longitude });
+  // console.log({ lattitude, longitude });
 }
 
 export default async function randomFunction() {
