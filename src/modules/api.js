@@ -30,53 +30,77 @@ export async function randomFunction() {
   return data;
 }
 
+function getWheatherStatus(weatherStatus) {
+  let max = 0;
+  let status;
+
+  Object.keys(weatherStatus).forEach((key) => {
+    if (max < weatherStatus[key]) {
+      status = key;
+      max = weatherStatus[key];
+    }
+  });
+
+  return status;
+}
+
 export async function getDailyWeather() {
   const data = await getWeekWheather();
   const hourlyWeather = await data.list;
   const today = moment(new Date()).format("D-MM-YYYY");
 
-  let resetMinMax;
-  let prevDate;
+  let resetMinMax = true;
+  let prevDate = today;
   let minTemp;
   let maxTemp;
-  // let start;
   const dailyWheather = [];
   let hourTemp = [];
+  let weatherStatus = {};
 
   hourlyWeather.forEach((item, index) => {
-    if (index === 0) {
-      resetMinMax = true;
-      // start = 0;
-      prevDate = today;
-    }
+    // if (index === 0) {
+    //   resetMinMax = true;
+    //   prevDate = today;
+    // }
 
     if (resetMinMax) {
       minTemp = Number.MAX_VALUE;
       maxTemp = Number.MIN_VALUE;
     }
 
-    if (index === hourlyWeather.length - 1) {
-      // console.log(hourlyWeather.slice(start));
-      dailyWheather.push({
-        date: prevDate,
-        hourlyTemp: hourTemp,
-        minTemp,
-        maxTemp,
-      });
-    }
+    // if (index === hourlyWeather.length - 1) {
+    //   // console.log(hourlyWeather.slice(start));
+    //   dailyWheather.push({
+    //     date: prevDate,
+    //     hourlyTemp: hourTemp,
+    //     minTemp,
+    //     maxTemp,
+    //   });
+    // }
 
-    if (prevDate === moment(item.dt_txt).format("D-MM-YYYY")) {
-      resetMinMax = false;
-    } else {
-      // console.log(hourlyWeather.slice(start, index));
+    if (
+      prevDate !== moment(item.dt_txt).format("D-MM-YYYY") ||
+      index === hourlyWeather.length - 1
+    ) {
+      // console.log(weatherStatus);
+      // getWheatherStatus(weatherStatus);
       dailyWheather.push({
         date: prevDate,
         hourlyTemp: hourTemp,
         minTemp,
         maxTemp,
+        weather: getWheatherStatus(weatherStatus),
       });
       hourTemp = [];
-      // start = index;
+      weatherStatus = {};
+    } else {
+      resetMinMax = false;
+    }
+
+    if (weatherStatus[item.weather[0].main]) {
+      weatherStatus[item.weather[0].main] += 1;
+    } else {
+      weatherStatus[item.weather[0].main] = 1;
     }
 
     hourTemp.push(item.main.temp);
