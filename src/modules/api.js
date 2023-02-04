@@ -27,6 +27,7 @@ export async function randomFunction() {
 
   const response = await fetch(url);
   const data = await response.json();
+  console.log(data);
   return data;
 }
 
@@ -44,6 +45,14 @@ function getWheatherStatus(weatherStatus) {
   return status;
 }
 
+function getAvgWeather(data) {
+  let sum = 0;
+  data.forEach((item) => {
+    sum += item;
+  });
+  return (sum / data.length).toFixed(2);
+}
+
 export async function getDailyWeather() {
   const data = await getWeekWheather();
   const hourlyWeather = await data.list;
@@ -54,6 +63,8 @@ export async function getDailyWeather() {
   let minTemp;
   let maxTemp;
   const dailyWheather = [];
+  let humidity = [];
+  let wind = [];
   let hourTemp = [];
   let weatherStatus = {};
 
@@ -87,10 +98,15 @@ export async function getDailyWeather() {
       dailyWheather.push({
         date: prevDate,
         hourlyTemp: hourTemp,
+        temp: getAvgWeather(hourTemp),
+        humidity: getAvgWeather(humidity),
+        wind: getAvgWeather(wind),
         minTemp,
         maxTemp,
         weather: getWheatherStatus(weatherStatus),
       });
+      humidity = [];
+      wind = [];
       hourTemp = [];
       weatherStatus = {};
     } else {
@@ -103,6 +119,8 @@ export async function getDailyWeather() {
       weatherStatus[item.weather[0].main] = 1;
     }
 
+    humidity.push(item.main.humidity);
+    wind.push(item.wind.speed);
     hourTemp.push(item.main.temp);
     minTemp = Math.min(minTemp, item.main.temp_min);
     maxTemp = Math.max(maxTemp, item.main.temp_max);
