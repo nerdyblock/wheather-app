@@ -9,7 +9,7 @@ import snow from "../assets/snowflake-cold.svg";
 import thunderstorm from "../assets/thunderstorm.svg";
 import dayRain from "../assets/day-rain.svg";
 
-const today = moment(new Date()).format("D-MM-YYYY");
+// const today = new Date();
 const weatherIcon = {
   Clear: clearDay,
   Haze: haze,
@@ -21,18 +21,19 @@ const weatherIcon = {
   dayRain: dayRain,
 };
 
-const getDay = {
-  0: "Sun",
-  1: "Mon",
-  2: "Tue",
-  3: "Wed",
-  4: "Thu",
-  5: "Fri",
-  6: "Sat",
-};
+// const getDay = {
+//   0: "Sun",
+//   1: "Mon",
+//   2: "Tue",
+//   3: "Wed",
+//   4: "Thu",
+//   5: "Fri",
+//   6: "Sat",
+// };
 
 export default function uiShowCurrentTemperature(currentTemp) {
   const currentTempDisplay = document.getElementById("current-temp");
+  let currentDate = currentTemp.date;
   const humidityDisplay = document.querySelector(".humidity");
   const windSpeedDisplay = document.querySelector(".wind");
   const currentWeatherIcon = document.querySelector(".current-weather-icon");
@@ -45,8 +46,13 @@ export default function uiShowCurrentTemperature(currentTemp) {
     weatherStatus = "Haze";
   }
 
-  date.textContent = today;
-  day.textContent = getDay[today];
+  if (!currentDate) {
+    currentDate = new Date();
+  }
+
+  date.textContent = moment(currentDate).format("DD-MM-YYYY");
+  // const dateFormat = moment(today).format("MM-DD-YYYY");
+  day.textContent = moment(currentDate).format("dddd").slice(0, 3);
   status.textContent = currentTemp.weather[0].main;
   currentWeatherIcon.src = weatherIcon[weatherStatus];
   windSpeedDisplay.textContent = currentTemp.wind.speed;
@@ -69,7 +75,9 @@ export async function uiDailyWeather() {
     }
 
     dailyWeatherIcon.src = weatherIcon[weatherStatus];
-    day.textContent = getDay[new Date(item.date).getDay()];
+    // const dateFormat = moment(item.date).format("MM-DD-YYYY");
+    // day.textContent = getDay[new Date(dateFormat).getDay()];
+    day.textContent = moment(item.date).format("dddd").slice(0, 3);
     maxTemp.textContent = item.maxTemp;
     minTemp.textContent = item.minTemp;
   });

@@ -56,7 +56,7 @@ function getAvgWeather(data) {
 export async function getDailyWeather() {
   const data = await getWeekWheather();
   const hourlyWeather = await data.list;
-  const today = moment(new Date()).format("D-MM-YYYY");
+  const today = moment(new Date()).format("YYYY-MM-DD");
 
   let resetMinMax = true;
   let prevDate = today;
@@ -90,7 +90,7 @@ export async function getDailyWeather() {
     // }
 
     if (
-      prevDate !== moment(item.dt_txt).format("D-MM-YYYY") ||
+      prevDate.split(" ")[0] !== item.dt_txt.split(" ")[0] ||
       index === hourlyWeather.length - 1
     ) {
       // console.log(weatherStatus);
@@ -124,7 +124,8 @@ export async function getDailyWeather() {
     hourTemp.push(item.main.temp);
     minTemp = Math.min(minTemp, item.main.temp_min);
     maxTemp = Math.max(maxTemp, item.main.temp_max);
-    prevDate = moment(item.dt_txt).format("D-MM-YYYY");
+    // prevDate = moment(item.dt_txt).format("DD-MM-YYYY");
+    prevDate = item.dt_txt;
   });
 
   console.log(dailyWheather);
