@@ -1,0 +1,50 @@
+:root {
+    /* --header-background-color: rgb(60, 70, 104);
+    --header-color: rgb(239, 248, 250);
+    --nav-color: rgb(247, 241, 241); 
+    --nav-highlight: rgb(202, 212, 243); */
+    font-size: 16px;
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+html, body, div {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+.current-temp-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.daily-temp-container {
+    display: flex;
+}
+
+.daily-temp-card {
+    margin: 20px;
+    padding: 10px;
+    text-align: center;
+}
+
+.temp-card {
+    display: flex;
+    gap: 1em;
+}
