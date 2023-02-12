@@ -37,8 +37,8 @@ export default function uiShowCurrentTemperature(currentTemp) {
   const humidityDisplay = document.querySelector(".humidity");
   const windSpeedDisplay = document.querySelector(".wind");
   const currentWeatherIcon = document.querySelector(".current-weather-icon");
-  const date = document.querySelector(".date");
-  const day = document.querySelector(".day");
+  const city = document.querySelector(".city");
+  const day = document.querySelector(".current-day");
   const status = document.querySelector(".weather-status");
   let weatherStatus = currentTemp.weather[0].main;
 
@@ -50,24 +50,24 @@ export default function uiShowCurrentTemperature(currentTemp) {
     currentDate = new Date();
   }
 
-  date.textContent = moment(currentDate).format("DD-MM-YYYY");
+  city.textContent = currentTemp.name;
   // const dateFormat = moment(today).format("MM-DD-YYYY");
-  day.textContent = moment(currentDate).format("dddd").slice(0, 3);
+  day.textContent = moment(currentDate).format("dddd");
   status.textContent = currentTemp.weather[0].main;
   currentWeatherIcon.src = weatherIcon[weatherStatus];
   windSpeedDisplay.textContent = currentTemp.wind.speed;
   humidityDisplay.textContent = currentTemp.main.humidity;
-  currentTempDisplay.textContent = currentTemp.main.temp;
+  currentTempDisplay.textContent = `${currentTemp.main.temp} °C`;
 }
 
 export async function uiDailyWeather() {
   const dailyWeather = await getDailyWeather();
   dailyWeather.forEach((item, index) => {
-    const day = document.querySelector(`.day${index + 1}`);
-    const maxTemp = document.querySelector(`.max-temp${index + 1}`);
-    const minTemp = document.querySelector(`.min-temp${index + 1}`);
+    const day = document.querySelector(`#day${index + 1}`);
+    const maxTemp = document.querySelector(`#max-temp${index + 1}`);
+    const minTemp = document.querySelector(`#min-temp${index + 1}`);
     const dailyWeatherIcon = document.querySelector(`
-    .weather-icon${index + 1}`);
+    #weather-icon${index + 1}`);
     let weatherStatus = item.weather;
 
     if (!weatherIcon[weatherStatus]) {
