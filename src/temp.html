@@ -7,69 +7,75 @@
     <title>Wheather App</title>
 </head>
 <body>
-    <input type="text" name="search" id="search" placeholder="Enter City">
-    <div class="current-temp-card">
-        <img src="" alt="" class="current-weather-icon">
-        <h1 id="current-temp"></h1>
-        <div class="current-weather-info">
-            <div class="humidity"></div>
-            <div class="wind"></div>
-        </div>
-    </div>
-    <div class="time-and-date-card">
-        <div class="date"></div>
-        <div class="day"></div>
-        <div class="weather-status"></div>
-    </div>
-    <div class="daily-temp-container">
-        <div class="daily-temp-card">
-            <div class="day1-card">
-                <div class="day1"></div>
-                <img src="" alt="" class="weather-icon1">
-                <div class="max-temp1"></div>
-                <div class="min-temp1"></div>
+    <header>
+        <input type="text" name="search" id="search" placeholder="Enter City">
+    </header>
+    <main>
+        <div class="current-temp-container">
+            <div class="current-temp-card">
+                <img src="" alt="" class="current-weather-icon">
+                <div class="current-weather-info">
+                    <h1 id="current-temp"></h1>
+                    <div class="temp-info">Humidity: <span class="humidity"></span></div>
+                    <div class="temp-info">Wind: <span class="wind"></span></div>
+                </div>
+            </div>
+            <div class="time-and-date-card">
+                <div class="city"></div>
+                <div class="current-day"></div>
+                <div class="weather-status"></div>
             </div>
         </div>
-        <div class="daily-temp-card">
-            <div class="day2-card">
-                <div class="day2"></div>
-                <img src="" alt="" class="weather-icon2">
-                <div class="max-temp2"></div>
-                <div class="min-temp2"></div>
+        <div class="daily-temp-container">
+            <div class="daily-temp-card">
+                <div id="day1" class="day"></div>
+                <img src="" alt="" class="weather-icon" id="weather-icon1">
+                <div class="temp-card">
+                    <div id="max-temp1" class="max-temp"></div>
+                    <div id="min-temp1" class="min-temp"></div>
+                </div>
+            </div>
+            <div class="daily-temp-card">
+                <div id="day2" class="day"></div>
+                <img src="" alt="" class="weather-icon" id="weather-icon2">
+                <div class="temp-card">
+                    <div id="max-temp2" class="max-temp"></div>
+                    <div id="min-temp2" class="min-temp"></div>
+                </div>
+            </div>
+            <div class="daily-temp-card"> 
+                <div id="day3" class="day"></div>
+                <img src="" alt="" class="weather-icon" id="weather-icon3">
+                <div class="temp-card">
+                    <div id="max-temp3" class="max-temp"></div>
+                    <div id="min-temp3" class="min-temp"></div>
+                </div>
+            </div>
+            <div class="daily-temp-card">
+                <div id="day4" class="day"></div>
+                <img src="" alt="" class="weather-icon" id="weather-icon4">
+                <div class="temp-card">
+                    <div id="max-temp4" class="max-temp"></div>
+                    <div id="min-temp4" class="min-temp"></div>
+                </div>
+            </div>
+            <div class="daily-temp-card">
+                <div id="day5" class="day"></div>
+                <img src="" alt="" class="weather-icon" id="weather-icon5">
+                <div class="temp-card">
+                    <div id="max-temp5" class="max-temp"></div>
+                    <div id="min-temp5" class="min-temp"></div>
+                </div>
+            </div>
+            <div class="daily-temp-card">
+                <div id="day6" class="day"></div>
+                <img src="" alt="" class="weather-icon" id="weather-icon6">
+                <div class="temp-card">
+                    <div id="max-temp6" class="max-temp"></div>
+                    <div id="min-temp6" class="min-temp"></div>
+                </div>
             </div>
         </div>
-        <div class="daily-temp-card">
-            <div class="day3-card">
-                <div class="day3"></div>
-                <img src="" alt="" class="weather-icon3">
-                <div class="max-temp3"></div>
-                <div class="min-temp3"></div>
-            </div>
-        </div>
-        <div class="daily-temp-card">
-            <div class="day4-card">
-                <div class="day4"></div>
-                <img src="" alt="" class="weather-icon4">
-                <div class="max-temp4"></div>
-                <div class="min-temp4"></div>
-            </div>
-        </div>
-        <div class="daily-temp-card">
-            <div class="day5-card">
-                <div class="day5"></div>
-                <img src="" alt="" class="weather-icon5">
-                <div class="max-temp5"></div>
-                <div class="min-temp5"></div>
-            </div>
-        </div>
-        <div class="daily-temp-card">
-            <div class="day6-card">
-                <div class="day6"></div>
-                <img src="" alt="" class="weather-icon6">
-                <div class="max-temp6"></div>
-                <div class="min-temp6"></div>
-            </div>
-        </div>
-    </div>
+    </main>
 </body>
 </html>
