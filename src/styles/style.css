@@ -29,13 +29,56 @@ html, body, div {
 	vertical-align: baseline;
 }
 
+header {
+    padding: 50px;
+    text-align: right;
+}
+
+main {
+    text-align: center;
+}
+
 .current-temp-container {
+    padding: 1em 7em;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+}
+
+.current-temp-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.current-weather-icon {
+    width: 80px;
+    height: 80px;
+}
+
+.current-weather-info{
+    display: flex;
+    flex-direction: column;
+}
+
+#current-temp {
+    width: 140px;
+    font-size: 2.2em
+}
+
+.city {
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.time-and-date-card {
+    font-size: 2em;
 }
 
 .daily-temp-container {
     display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
 }
 
 .daily-temp-card {
@@ -44,7 +87,28 @@ html, body, div {
     text-align: center;
 }
 
+.weather-icon {
+    width: 50px;
+    height: 70px;
+}
+
 .temp-card {
     display: flex;
     gap: 1em;
+}
+
+.day {
+    font-size: 1.4em;
+    font-weight: 700;
+}
+
+.max-temp {
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.min-temp,
+.current-day,
+.weather-status {
+    color: rgb(63, 63, 63);
 }
