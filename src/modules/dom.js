@@ -1,5 +1,5 @@
 import moment from "moment";
-import { getDailyWeather } from "./api";
+import { currentWeather, getDailyWeather, getLatLong } from "./api";
 import clearDay from "../assets/day-sunny.svg";
 import haze from "../assets/haze.svg";
 import cloudy from "../assets/cloudy.svg";
@@ -8,8 +8,10 @@ import showers from "../assets/showers.svg";
 import snow from "../assets/snowflake-cold.svg";
 import thunderstorm from "../assets/thunderstorm.svg";
 import dayRain from "../assets/day-rain.svg";
+import searchImg from "../assets/search.svg";
 
-// const today = new Date();
+document.getElementById("search-button").querySelector("img").src = searchImg;
+
 const weatherIcon = {
   Clear: clearDay,
   Haze: haze,
@@ -21,17 +23,10 @@ const weatherIcon = {
   dayRain: dayRain,
 };
 
-// const getDay = {
-//   0: "Sun",
-//   1: "Mon",
-//   2: "Tue",
-//   3: "Wed",
-//   4: "Thu",
-//   5: "Fri",
-//   6: "Sat",
-// };
+export default async function uiShowCurrentTemperature() {
+  const currentTemp = await currentWeather();
+  const cityName = await getLatLong();
 
-export default function uiShowCurrentTemperature(currentTemp) {
   const currentTempDisplay = document.getElementById("current-temp");
   let currentDate = currentTemp.date;
   const humidityDisplay = document.querySelector(".humidity");
@@ -50,14 +45,15 @@ export default function uiShowCurrentTemperature(currentTemp) {
     currentDate = new Date();
   }
 
-  city.textContent = currentTemp.name;
-  // const dateFormat = moment(today).format("MM-DD-YYYY");
+  city.textContent = cityName[0].name;
   day.textContent = moment(currentDate).format("dddd");
   status.textContent = currentTemp.weather[0].main;
   currentWeatherIcon.src = weatherIcon[weatherStatus];
-  windSpeedDisplay.textContent = currentTemp.wind.speed;
-  humidityDisplay.textContent = currentTemp.main.humidity;
-  currentTempDisplay.textContent = `${currentTemp.main.temp} °C`;
+  windSpeedDisplay.textContent = `${currentTemp.wind.speed}km/h`;
+  humidityDisplay.textContent = `${currentTemp.main.humidity}%`;
+  currentTempDisplay.textContent = currentTemp.main.temp;
+
+  document.querySelector("body").style.visibility = "visible";
 }
 
 export async function uiDailyWeather() {
@@ -75,8 +71,6 @@ export async function uiDailyWeather() {
     }
 
     dailyWeatherIcon.src = weatherIcon[weatherStatus];
-    // const dateFormat = moment(item.date).format("MM-DD-YYYY");
-    // day.textContent = getDay[new Date(dateFormat).getDay()];
     day.textContent = moment(item.date).format("dddd").slice(0, 3);
     maxTemp.textContent = item.maxTemp;
     minTemp.textContent = item.minTemp;

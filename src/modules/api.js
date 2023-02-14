@@ -1,29 +1,34 @@
 import moment from "moment";
 
-const latLongUrl = `http://api.openweathermap.org/geo/1.0/direct?q=Delhi&limit=1&appid=${process.env.API_KEY}`;
+let latLongUrl = `http://api.openweathermap.org/geo/1.0/direct?q=Delhi&limit=1&appid=${process.env.API_KEY}`;
 
-async function getLatLong() {
+export function setLatLongUrl(city) {
+  latLongUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${process.env.API_KEY}`;
+}
+
+export async function getLatLong() {
+  // const url = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${process.env.API_KEY}`;
+
   const response = await fetch(latLongUrl);
   const data = await response.json();
-  const lattitude = data[0].lat;
-  const longitude = data[0].lon;
-  return { lattitude, longitude };
+  return data;
 }
 
 export async function getWeekWheather() {
   const value = await getLatLong();
 
-  const weekWheatherurl = `http://api.openweathermap.org/data/2.5/forecast?lat=${value.lattitude}&lon=${value.longitude}&appid=${process.env.API_KEY}&units=metric`;
+  const weekWheatherurl = `http://api.openweathermap.org/data/2.5/forecast?lat=${value[0].lat}&lon=${value[0].lon}&appid=${process.env.API_KEY}&units=metric`;
+
   const response = await fetch(weekWheatherurl);
   const data = await response.json();
   console.log(data);
   return data;
 }
 
-export async function randomFunction() {
+export async function currentWeather() {
   const value = await getLatLong();
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${value.lattitude}&lon=${value.longitude}&appid=019a9b26ae74668f975f0960e4fdc9ee&units=metric`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${value[0].lat}&lon=${value[0].lon}&appid=019a9b26ae74668f975f0960e4fdc9ee&units=metric`;
 
   const response = await fetch(url);
   const data = await response.json();
@@ -69,32 +74,15 @@ export async function getDailyWeather() {
   let weatherStatus = {};
 
   hourlyWeather.forEach((item, index) => {
-    // if (index === 0) {
-    //   resetMinMax = true;
-    //   prevDate = today;
-    // }
-
     if (resetMinMax) {
       minTemp = Number.MAX_VALUE;
       maxTemp = Number.MIN_VALUE;
     }
 
-    // if (index === hourlyWeather.length - 1) {
-    //   // console.log(hourlyWeather.slice(start));
-    //   dailyWheather.push({
-    //     date: prevDate,
-    //     hourlyTemp: hourTemp,
-    //     minTemp,
-    //     maxTemp,
-    //   });
-    // }
-
     if (
       prevDate.split(" ")[0] !== item.dt_txt.split(" ")[0] ||
       index === hourlyWeather.length - 1
     ) {
-      // console.log(weatherStatus);
-      // getWheatherStatus(weatherStatus);
       dailyWheather.push({
         date: prevDate,
         hourlyTemp: hourTemp,
@@ -124,17 +112,12 @@ export async function getDailyWeather() {
     hourTemp.push(item.main.temp);
     minTemp = Math.min(minTemp, item.main.temp_min);
     maxTemp = Math.max(maxTemp, item.main.temp_max);
-    // prevDate = moment(item.dt_txt).format("DD-MM-YYYY");
     prevDate = item.dt_txt;
   });
 
   console.log(dailyWheather);
   return dailyWheather;
 }
-
-// randomFunction();
-// getLatLong();
-// getWeekWheather();
 
 // enable geolocation
 // navigator.geolocation.getCurrentPosition((position) => console.log(position));
