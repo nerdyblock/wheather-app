@@ -7,8 +7,6 @@ export function setLatLongUrl(city) {
 }
 
 export async function getLatLong() {
-  // const url = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${process.env.API_KEY}`;
-
   const response = await fetch(latLongUrl);
   const data = await response.json();
   return data;
@@ -21,18 +19,19 @@ export async function getWeekWheather() {
 
   const response = await fetch(weekWheatherurl);
   const data = await response.json();
-  console.log(data);
+
   return data;
 }
 
 export async function currentWeather() {
   const value = await getLatLong();
+  sessionStorage.setItem("city", JSON.stringify(value));
 
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${value[0].lat}&lon=${value[0].lon}&appid=019a9b26ae74668f975f0960e4fdc9ee&units=metric`;
 
   const response = await fetch(url);
   const data = await response.json();
-  console.log(data);
+
   return data;
 }
 
@@ -84,15 +83,26 @@ export async function getDailyWeather() {
       index === hourlyWeather.length - 1
     ) {
       dailyWheather.push({
+        main: {
+          humidity: getAvgWeather(humidity),
+          temp: getAvgWeather(hourTemp),
+          maxTemp,
+          minTemp,
+        },
+        wind: {
+          speed: getAvgWeather(wind),
+        },
+        weather: [{ main: getWheatherStatus(weatherStatus) }],
         date: prevDate,
         hourlyTemp: hourTemp,
-        temp: getAvgWeather(hourTemp),
-        humidity: getAvgWeather(humidity),
-        wind: getAvgWeather(wind),
-        minTemp,
-        maxTemp,
-        weather: getWheatherStatus(weatherStatus),
+        // temp: getAvgWeather(hourTemp),
+        // humidity: getAvgWeather(humidity),
+        // wind: getAvgWeather(wind),
+        // minTemp,
+        // maxTemp,
+        // weather: getWheatherStatus(weatherStatus),
       });
+
       humidity = [];
       wind = [];
       hourTemp = [];
@@ -115,7 +125,7 @@ export async function getDailyWeather() {
     prevDate = item.dt_txt;
   });
 
-  console.log(dailyWheather);
+  sessionStorage.setItem("daily-weather", JSON.stringify(dailyWheather));
   return dailyWheather;
 }
 

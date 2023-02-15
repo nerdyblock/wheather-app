@@ -23,10 +23,7 @@ const weatherIcon = {
   dayRain: dayRain,
 };
 
-export default async function uiShowCurrentTemperature() {
-  const currentTemp = await currentWeather();
-  const cityName = await getLatLong();
-
+export function renderCurrentWeather(currentTemp, cityName) {
   const currentTempDisplay = document.getElementById("current-temp");
   let currentDate = currentTemp.date;
   const humidityDisplay = document.querySelector(".humidity");
@@ -52,19 +49,16 @@ export default async function uiShowCurrentTemperature() {
   windSpeedDisplay.textContent = `${currentTemp.wind.speed}km/h`;
   humidityDisplay.textContent = `${currentTemp.main.humidity}%`;
   currentTempDisplay.textContent = currentTemp.main.temp;
-
-  document.querySelector("body").style.visibility = "visible";
 }
 
-export async function uiDailyWeather() {
-  const dailyWeather = await getDailyWeather();
+function renderDailyWeather(dailyWeather) {
   dailyWeather.forEach((item, index) => {
     const day = document.querySelector(`#day${index + 1}`);
     const maxTemp = document.querySelector(`#max-temp${index + 1}`);
     const minTemp = document.querySelector(`#min-temp${index + 1}`);
     const dailyWeatherIcon = document.querySelector(`
     #weather-icon${index + 1}`);
-    let weatherStatus = item.weather;
+    let weatherStatus = item.weather[0].main;
 
     if (!weatherIcon[weatherStatus]) {
       weatherStatus = "Haze";
@@ -72,7 +66,19 @@ export async function uiDailyWeather() {
 
     dailyWeatherIcon.src = weatherIcon[weatherStatus];
     day.textContent = moment(item.date).format("dddd").slice(0, 3);
-    maxTemp.textContent = item.maxTemp;
-    minTemp.textContent = item.minTemp;
+    maxTemp.textContent = item.main.maxTemp;
+    minTemp.textContent = item.main.minTemp;
   });
+}
+
+export default async function uiShowCurrentTemperature() {
+  const currentTemp = await currentWeather();
+  const cityName = await getLatLong();
+  renderCurrentWeather(currentTemp, cityName);
+  document.querySelector("body").style.visibility = "visible";
+}
+
+export async function uiDailyWeather() {
+  const dailyWeather = await getDailyWeather();
+  renderDailyWeather(dailyWeather);
 }
