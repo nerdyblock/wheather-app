@@ -1,5 +1,8 @@
 import { getDailyWeather, setLatLongUrl } from "./modules/api";
-import uiShowCurrentTemperature, { uiDailyWeather } from "./modules/dom";
+import uiShowCurrentTemperature, {
+  renderCurrentWeather,
+  uiDailyWeather,
+} from "./modules/dom";
 import "./styles/style.css";
 
 const searchCity = document.getElementById("search");
@@ -28,3 +31,17 @@ window.addEventListener("DOMContentLoaded", () => {
   uiDailyWeather();
   getDailyWeather();
 });
+
+document
+  .querySelector(".daily-temp-container")
+  .addEventListener("click", (e) => {
+    const dailyTempInfo = JSON.parse(sessionStorage.getItem("daily-weather"));
+    const cityName = JSON.parse(sessionStorage.getItem("city"));
+    const index = e.target.closest("[data-key]").dataset.key;
+
+    if (index === 0) {
+      uiShowCurrentTemperature();
+    } else {
+      renderCurrentWeather(dailyTempInfo[index], cityName);
+    }
+  });
