@@ -71,14 +71,32 @@ function renderDailyWeather(dailyWeather) {
   });
 }
 
+export function showError() {
+  const errorDiv = document.getElementById("error");
+  errorDiv.style.visibility = "visible";
+}
+
+export function hideError() {
+  const errorDiv = document.getElementById("error");
+  errorDiv.style.visibility = "hidden";
+}
+
 export default async function uiShowCurrentTemperature() {
-  const currentTemp = await currentWeather();
-  const cityName = await getLatLong();
-  renderCurrentWeather(currentTemp, cityName);
-  document.querySelector("body").style.visibility = "visible";
+  try {
+    const currentTemp = await currentWeather();
+    const cityName = await getLatLong();
+    renderCurrentWeather(currentTemp, cityName);
+    document.querySelector("body").style.visibility = "visible";
+  } catch (err) {
+    showError();
+  }
 }
 
 export async function uiDailyWeather() {
-  const dailyWeather = await getDailyWeather();
-  renderDailyWeather(dailyWeather);
+  try {
+    const dailyWeather = await getDailyWeather();
+    renderDailyWeather(dailyWeather);
+  } catch (err) {
+    showError();
+  }
 }
