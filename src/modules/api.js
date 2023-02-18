@@ -9,6 +9,13 @@ export function setLatLongUrl(city) {
 export async function getLatLong() {
   const response = await fetch(latLongUrl);
   const data = await response.json();
+
+  // if (!data.length) {
+  //   data = JSON.parse(sessionStorage.getItem("city"));
+  // } else {
+  //   sessionStorage.setItem("city", JSON.stringify(data));
+  // }
+
   return data;
 }
 
@@ -25,7 +32,7 @@ export async function getWeekWheather() {
 
 export async function currentWeather() {
   const value = await getLatLong();
-  sessionStorage.setItem("city", JSON.stringify(value));
+  // sessionStorage.setItem("city", JSON.stringify(value));
 
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${value[0].lat}&lon=${value[0].lon}&appid=019a9b26ae74668f975f0960e4fdc9ee&units=metric`;
 
@@ -95,12 +102,6 @@ export async function getDailyWeather() {
         weather: [{ main: getWheatherStatus(weatherStatus) }],
         date: prevDate,
         hourlyTemp: hourTemp,
-        // temp: getAvgWeather(hourTemp),
-        // humidity: getAvgWeather(humidity),
-        // wind: getAvgWeather(wind),
-        // minTemp,
-        // maxTemp,
-        // weather: getWheatherStatus(weatherStatus),
       });
 
       humidity = [];
@@ -128,6 +129,3 @@ export async function getDailyWeather() {
   sessionStorage.setItem("daily-weather", JSON.stringify(dailyWheather));
   return dailyWheather;
 }
-
-// enable geolocation
-// navigator.geolocation.getCurrentPosition((position) => console.log(position));
