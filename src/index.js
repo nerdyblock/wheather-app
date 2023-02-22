@@ -9,7 +9,7 @@ import "./styles/style.css";
 
 const searchCity = document.getElementById("search");
 const todayTempCard = document.querySelector('[data-key="0"]');
-document.querySelector("body").style.visibility = "hidden";
+// document.querySelector("body").style.visibility = "hidden";
 
 hideError();
 
