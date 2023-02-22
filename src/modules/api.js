@@ -1,9 +1,9 @@
 import moment from "moment";
 
-let latLongUrl = `http://api.openweathermap.org/geo/1.0/direct?q=Delhi&limit=1&appid=${process.env.API_KEY}`;
+let latLongUrl = `https://api.openweathermap.org/geo/1.0/direct?q=Delhi&limit=1&appid=${process.env.API_KEY}`;
 
 export function setLatLongUrl(city) {
-  latLongUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${process.env.API_KEY}`;
+  latLongUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${process.env.API_KEY}`;
 }
 
 export async function getLatLong() {
@@ -22,7 +22,7 @@ export async function getLatLong() {
 export async function getWeekWheather() {
   const value = await getLatLong();
 
-  const weekWheatherurl = `http://api.openweathermap.org/data/2.5/forecast?lat=${value[0].lat}&lon=${value[0].lon}&appid=${process.env.API_KEY}&units=metric`;
+  const weekWheatherurl = `https://api.openweathermap.org/data/2.5/forecast?lat=${value[0].lat}&lon=${value[0].lon}&appid=${process.env.API_KEY}&units=metric`;
 
   const response = await fetch(weekWheatherurl);
   const data = await response.json();
