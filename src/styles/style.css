@@ -25,8 +25,20 @@ html, body, div {
 	vertical-align: baseline;
 }
 
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    background-color: #f3f3f3;
+    margin: 0 auto;
+}
+
 header {
-    padding: 3em 6em;
+    padding: 2em 6em;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -40,7 +52,7 @@ header {
 
 #error {
     color: rgb(241, 40, 40);
-    font-size: 0.9em;
+    font-size: 0.9rem;
     margin-right: 80px;
 }
 
@@ -58,16 +70,21 @@ header {
 }
 
 main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
     text-align: center;
+    justify-content: space-between;
 }
 
 sup {
-    font-size: 0.7em;
     color: rgb(56, 56, 56);
 }
 
 .current-temp-container {
-    padding: 1em 7em;
+    padding: 2em;
+    width: 80%;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -77,86 +94,112 @@ sup {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1em;
+    gap: 0.8em;
 }
 
 .current-weather-icon {
-    width: 6em;
-    height: 6em;
+    width: 5em;
+    height: 5em;
 }
 
 .current-weather-info{
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
     gap: 0.2em;
 }
 
 #current-temp {
-    width: 140px;
+    width: 9em;
     padding: 10px;
     font-size: 1.4em
 }
 
 .temp-info {
-    font-size: 1em;
+    font-size: 1rem;
     color: rgb(63, 63, 63);
 }
 
 .city {
-    font-size: 1.2em;
+    font-size: 1.8rem;
     font-weight: 550;
 }
 
 .current-day,
 .weather-status {
     color: rgb(63, 63, 63);
-    font-size: 0.7em;
+    font-size: 1.2rem;
 }
 
 .time-and-date-card {
-    font-size: 1.8em;
+    padding: 1em;
 }
 
 .daily-temp-container {
     display: flex;
     justify-content: space-evenly;
-    padding: 10px;
+    padding: 2em;
+    margin-bottom: 2em;
 }
 
 .daily-temp-card {
-    margin: 5px;
+    margin: 0.3125em;
     display: flex;
     flex-direction: column;
+    gap: 0.5em;
     align-items: center;
-    padding: 20px 30px;
+    padding: 1.8em 0.8em;
     text-align: center;
+    flex-basis: 10em;
 }
 
 .active {
     border-radius: 10px;
-    background-color: rgb(245, 242, 242);
+    background-color: rgba(195, 216, 216, 0.438);
 }
 
 .weather-icon {
-    width: 50px;
-    height: 70px;
+    width: 2.8em;
+    height: 3.5em;
 }
 
 .temp-card {
     display: flex;
     gap: 1em;
+    align-items: center;
+    justify-content: center;
 }
 
 .day {
-    font-size: 1.4em;
+    font-size: 1.4rem;
     font-weight: 700;
 }
 
 .max-temp {
-    font-size: 1em;
+    font-size: 1rem;
     font-weight: 600;
 }
 
 .min-temp {
     color: rgb(63, 63, 63);
+}
+
+@media (max-width: 800px) {
+
+    .daily-temp-container {
+        flex-direction: column;
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .current-temp-container {
+        flex-direction: column;
+        gap: 2em;
+        width: 80%;
+        margin: 0 auto;
+    }
 }
