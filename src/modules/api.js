@@ -32,7 +32,7 @@ export async function getWeekWheather() {
 
 export async function currentWeather() {
   const value = await getLatLong();
-  // sessionStorage.setItem("city", JSON.stringify(value));
+  sessionStorage.setItem("city", JSON.stringify(value));
 
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${value[0].lat}&lon=${value[0].lon}&appid=019a9b26ae74668f975f0960e4fdc9ee&units=metric`;
 
